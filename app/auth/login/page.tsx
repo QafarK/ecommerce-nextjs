@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -17,6 +19,15 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(form);
+
+    const isLoginValid = form.email === "test@example.com" && form.password === "123456";
+
+    if (true) {
+      alert("User Log duzelt");
+      router.push("/");
+    } else {
+      alert("Invalid email or password");
+    }
   };
 
   return (
@@ -37,7 +48,7 @@ export default function LoginPage() {
       <div className="flex w-full md:w-4/10 justify-center items-center p-10 ">
         <div className="w-full max-w-sm">
           <h1 className="text-3xl font-semibold mb-2">Log in to Exclusive</h1>
-          <p className="text-gray-500 mb-8">Enter your details below</p>
+          <p className="text-gray-700 font-semibold mb-8">Enter your details below</p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <input
