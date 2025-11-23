@@ -1,7 +1,7 @@
 import HomeHeader from "@/components/HomeHeader";
 import Image from "next/image";
 import Footer from "@/components/Footer";
-import Products from "@/components/Products";
+import Products from "@/components/ProductsSection";
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
