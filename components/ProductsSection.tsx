@@ -1,23 +1,8 @@
 import { getProducts } from "@/lib/getProducts";
-// import ProductsGrid from "./ProductsGrid";
-// import Link from "next/link";
 import ProductsGrid from "./ProductsGrid";
-// type Product = {
-//   _id: string;
-//   title: string;
-//   price: number;
-//   currency: string;
-//   images: string[];
-// };
 
 export default async function ProductsSection() {
   const data = await getProducts();
-
-
-// for (let i = 0; i < data.length; i++) {
-//   console.log("IMAGES:", data[i].images[0]);
-// }
-
 
   return (
     <div>

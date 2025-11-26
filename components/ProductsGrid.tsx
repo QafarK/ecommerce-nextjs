@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Product = {
   _id: string;
@@ -25,7 +25,7 @@ export default function ProductsGrid({ products }: { products: Product[] }) {
         {products.slice(0, visibleCount).map((product) => (
           <Link
             key={product._id}
-            href={`/product/${product._id}`}
+            href={`product/${product._id}`}
             className="group cursor-pointer"
           >
             <div className="relative bg-gray-100 rounded p-4 mx-auto w-full aspect-square flex items-center justify-center">

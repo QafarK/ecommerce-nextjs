@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Products from "@/components/ProductsSection";
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       {/* HEADER */}
       <header>
         <HomeHeader />

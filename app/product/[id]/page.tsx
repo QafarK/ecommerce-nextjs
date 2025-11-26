@@ -1,29 +1,31 @@
-// import UserCard from '@/components/users/UserCard';
+import HomeHeader from "@/components/HomeHeader";
+import Footer from "@/components/Footer";
+import ProductDetailsSection from "@/components/ProductDetailsSection";
 
-// interface UserDetailsProps {
-//   params: { id: string };
-// }
+export default async function ProductDetailsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
-// const UserDetails = async ({ params }: UserDetailsProps) => {
-//   const userId = params.id; // string, await və use() lazım deyil
-
-//   const res = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`);
-//   const data = await res.json();
-
-//   return (
-//     <div className="w-full h-screen flex items-center justify-center">
-//       <UserCard user={data} />
-//     </div>
-//   );
-// };
-
-// export default UserDetails;
-import React from 'react'
-
-const Test = () => {
   return (
-    <div>Test</div>
-  )
+    <div className="flex flex-col min-h-screen">
+    
+      <header className="shrink-0">
+        <HomeHeader />
+      </header>
+
+      <main className="flex-1">
+        <ProductDetailsSection id={id} />
+      </main>
+
+      <footer className="shrink-0">
+        <Footer />
+      </footer>
+    </div>
+  );
 }
 
-export default Test
+
+
