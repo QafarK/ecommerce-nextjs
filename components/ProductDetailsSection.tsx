@@ -37,13 +37,37 @@ export default async function ProductDetailsSection({ id }: { id: string }) {
           {data.currency}{data.price}
         </p>
 
-        <p className="text-gray-600 leading-relaxed">
+        <p className="text-gray-600 leading-relaxed border-b pb-6">
           {data.description}
         </p>
 
         <button className="w-full bg-red-600 text-white py-4 rounded-xl font-semibold hover:bg-red-700 transition">
           Add to Basket
         </button>
+
+{/* === DELIVERY & RETURN === */}
+<div className="border border-gray-500 rounded-md divide-y divide-gray-500 pt-4 pb-4 ">
+  <div className="flex gap-4 items-start pb-4">
+    <div className="text-green-600 pl-4">🚚</div>
+    <div>
+      <p className="font-medium">Free Delivery</p>
+      <p className="text-sm text-gray-500 underline">
+        Enter your postal code for Delivery Availability
+      </p>
+    </div>
+  </div>
+
+  <div className="flex gap-4 items-start pt-4">
+    <div className="text-gray-600 pl-4">↩️</div>
+    <div>
+      <p className="font-medium">Return Delivery</p>
+      <p className="text-sm text-gray-500">
+        Free 30 Days Delivery Returns. <u>Details</u>
+      </p>
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
   );

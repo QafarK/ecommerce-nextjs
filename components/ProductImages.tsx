@@ -26,17 +26,17 @@ export default function ProductImages({
               onClick={() => setSelectedImage(thumb)}
               className={`w-20 h-20 sm:w-24 sm:h-24 border rounded-xl overflow-hidden transition cursor-pointer
                 ${active ? "border-red-600" : "border-transparent hover:border-gray-300"}
-              `}
-            >
+                `}
+                >
               <Image
                 src={thumb}
                 alt={`Thumbnail ${i}`}
                 width={96}
                 height={96}
                 className="object-contain w-full h-full p-2"
-              />
+                />
             </button>
-            
+
           );
         })}
       </div>
