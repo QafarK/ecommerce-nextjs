@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
       "m.media-amazon.com",
       "media.very.co.uk",
       "encrypted-tbn0.gstatic.com",
+      "kataandasana.com",
+      "images-eu.ssl-images-amazon.com",
     ],
   },
 };
