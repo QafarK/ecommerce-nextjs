@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-
+import Link from "next/link";
 const HomeHeader = () => {
   const [query, setQuery] = useState("");
 
@@ -13,7 +13,7 @@ const HomeHeader = () => {
     <>
     
     <div className="flex justify-between items-center pt-8 pb-7 px-28 ">
-      <h1 className="text-2xl font-bold">Exclusive</h1>
+      <Link href="/" className="text-2xl font-bold">Exclusive</Link>
       <div className="flex items-center space-x-4">
 
 
