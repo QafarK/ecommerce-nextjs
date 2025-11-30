@@ -20,13 +20,13 @@ export async function loginUser(email: string, password: string) {
  
    const cookieStore = await cookies();
  
-   cookieStore.set("access_token", accessToken, {
-     httpOnly: true,
-     secure: process.env.NODE_ENV === "production",
-     sameSite: "lax",
-     path: "/",
-     maxAge: 60 * 60,
-   });
+  cookieStore.set("access_token", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24,
+  });
  
    cookieStore.set("refresh_token", refreshToken, {
      httpOnly: true,

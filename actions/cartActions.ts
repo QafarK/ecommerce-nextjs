@@ -54,6 +54,36 @@ export async function removeBasketProductById(productId: string) {
 }
 
 
+export async function removeAllBasketProducts() {
+  const headers = await getAuthHeaders();
+
+  const res = await fetch(`${API_BASE}/products`, {
+    method: "GET",
+    headers,
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Couldn't fetch basket to clear it");
+  }
+
+  const data = await res.json();
+
+  const items = data.content || [];
+
+  for (const item of items) {
+    await fetch(`${API_BASE}/delete/${item.id}`, {
+      method: "DELETE",
+      headers,
+      cache: "no-store",
+    });
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/cart");
+}
+
+
 export async function getBasketProducts() {
   const headers = await getAuthHeaders();
 

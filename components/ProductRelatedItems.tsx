@@ -51,6 +51,7 @@ const ProductRelatedItems = async () => {
               <div className="absolute left-0 right-0 bottom-0 z-20">
                 <AddToBasketButton
                   productId={product._id}
+                  count={1}
                   className="w-full bg-black text-white text-xs py-2 opacity-0 group-hover:opacity-100 hover:bg-gray-800 transition-opacity duration-300 cursor-pointer"
                 >
                   Add To Basket

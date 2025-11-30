@@ -1,61 +1,82 @@
 "use client";
-import Image from "next/image";
-import { useState } from "react";
-import Link from "next/link";
-const HomeHeader = () => {
-  const [query, setQuery] = useState("");
 
-  const handleSearch = () => {
-    console.log("Axtaris edildi:" , query);
+import { useState } from "react";
+import Image from "next/image";
+
+type Product = {
+  _id: string;
+  title: string;
+  price: number;
+  currency: string;
+  image: string;
+};
+
+export default function HomeHeader() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSearch = async () => {
+    if (!query) return;
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `https://ilkinibadov.com/api/v1/search?searchterm=${encodeURIComponent(query)}`
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch");
+
+      const data = await res.json();
+      setResults(data.content || []);
+      console.log(data.content);
+    } catch (error) {
+      console.error(error);
+      setResults([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <>
-    
-    <div className="flex justify-between items-center pt-8 pb-7 px-28 ">
-      <Link href="/" className="text-2xl font-bold">Exclusive</Link>
-      <div className="flex items-center space-x-4">
+    <div className="bg-gray-100 rounded-xl mx-4 mt-4 mb-2 p-2">
+      <div className="flex gap-2">
+        <input
+          className="text-base px-2 flex-1"
+          placeholder="Search products..."
+          value={query}
+          onChange={handleChange}
+        />
+        <button
+          className="bg-blue-500 text-white px-4 rounded"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
 
-
-        <div className="flex items-center bg-gray-200 rounded pr-2  w-full max-w-sm">
-          <input
-            type="text"
-            placeholder="What are you looking for?"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="flex-1 outline-none h-9 pr-6 pl-4 w-62"
-          />
-          <button onClick={handleSearch} type="button">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {results.map((item: Product) => (
+          <div key={item._id} className="border p-2 rounded">
             <Image
-              src="/icons/searchIcon.svg"
-              alt="Search"
-              width={24}
-              height={24}
-              className="cursor-pointer"
+              src={item.image}
+              alt={item.title}
+              width={300}
+              height={160}
+              className="w-full h-40 object-cover"
             />
-          </button>
-        </div>
-
-        <Image
-          src="/icons/basket.svg"
-          alt="Search"
-          width={32}
-          height={32}
-          className="cursor-pointer"
-        ></Image>
-
-        <Image
-          src="/icons/user.svg"
-          alt="Search"
-          width={32}
-          height={32}
-          className="cursor-pointer"
-        ></Image>
+            <h3 className="font-medium mt-2">{item.title}</h3>
+            <p className="text-gray-600">
+              {item.currency}
+              {item.price}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
-    <div className="border-b border-gray-300"></div>
-    </>
   );
-};
-
-export default HomeHeader;
+}

@@ -1,11 +1,10 @@
 import ProductImages from "./ProductImages";
-import QuantitySelector from "./QuantitySelector";
 import { getProductById } from "@/lib/getProductById";
 import number2 from "../public/images/2number.png";
 import number3 from "../public/images/3number.png";
 import number4 from "../public/images/4number.png";
 import Image from "next/image";
-
+import QuantityAndAddToCart  from "./QuantityAndAddToCart";
 export default async function ProductDetailsSection({ id }: { id: string }) {
   const data = await getProductById(id);
 
@@ -40,13 +39,7 @@ export default async function ProductDetailsSection({ id }: { id: string }) {
         </p>
 
         {/* Quantity + Add to Basket */}
-        <div className="flex items-center gap-20 pt-20 pb-5">
-          <QuantitySelector />
-
-          <button className="flex-1 h-12 bg-red-600 text-white py-2 rounded-md font-semibold cursor-pointer hover:bg-red-700 transition">
-            Add to Basket
-          </button>
-        </div>
+        <QuantityAndAddToCart productId={id} />
 
         {/* === DELIVERY & RETURN === */}
         <div className="border border-gray-500 rounded-md divide-y divide-gray-500 py-4">
@@ -92,3 +85,4 @@ export default async function ProductDetailsSection({ id }: { id: string }) {
     </div>
   );
 }
+
