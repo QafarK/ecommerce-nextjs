@@ -9,7 +9,7 @@ export default function QuantitySelector() {
   const increase = () => setQty((q) => q + 1);
 
   return (
-    <div className="flex items-center border rounded-md overflow-hidden select-none">
+    <div className="flex h-12 items-center border rounded-md overflow-hidden select-none">
       <button
         onClick={decrease}
         className="px-4 py-3 text-lg hover:bg-red-500 border-r cursor-pointer transition"
@@ -17,7 +17,7 @@ export default function QuantitySelector() {
         -
       </button>
 
-      <span className="px-10 py-3 text-lg font-medium">{qty}</span>
+      <span className="px-10 py-3 bg-gray-200 text-lg font-medium">{qty}</span>
 
       <button
         onClick={increase}

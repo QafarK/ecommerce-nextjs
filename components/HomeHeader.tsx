@@ -23,7 +23,7 @@ const HomeHeader = () => {
             placeholder="What are you looking for?"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="flex-1 outline-none h-9 pr-6 pl-4 w-60"
+            className="flex-1 outline-none h-9 pr-6 pl-4 w-62"
           />
           <button onClick={handleSearch} type="button">
             <Image

@@ -41,7 +41,7 @@ export default function ProductImages({
       </div>
 
       {/* === MAIN IMAGE === */}
-      <div className="flex-1 relative rounded-2xl overflow-hidden border ">
+      <div className="flex-1 relative rounded-2xl overflow-hidden border">
         <Image
           src={selectedImage}
           alt="Product image"

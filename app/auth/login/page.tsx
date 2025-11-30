@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { loginUser } from "@/lib/auth/loginUser";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,28 +12,25 @@ export default function LoginPage() {
     password: "",
   });
 
+  const [error, setError] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // // console.log(e.target.name,":", e.target.value);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(form);
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  try {
+    await loginUser(form.email, form.password);
+    router.push("/");
+  } catch (err) {
+    setError("Email və ya parol yanlışdır!");
+  }
+};
 
-    const isLoginValid = form.email === "test@example.com" && form.password === "123456";
-
-    if (true) {
-      alert("User Log duzelt");
-      router.push("/");
-    } else {
-      alert("Invalid email or password");
-    }
-  };
 
   return (
     <div className="flex min-h-screen">
-
       {/* LEFT IMAGE */}
       <div className="hidden md:block w-6/10 relative mt-16 mb-16">
         <Image
@@ -45,10 +43,14 @@ export default function LoginPage() {
       </div>
 
       {/* RIGHT FORM */}
-      <div className="flex w-full md:w-4/10 justify-center items-center p-10 ">
+      <div className="flex w-full md:w-4/10 justify-center items-center p-10">
         <div className="w-full max-w-sm">
           <h1 className="text-3xl font-semibold mb-2">Log in to Exclusive</h1>
           <p className="text-gray-700 font-semibold mb-8">Enter your details below</p>
+
+          {error && (
+            <p className="text-red-600 text-sm mb-4">{error}</p>
+          )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <input

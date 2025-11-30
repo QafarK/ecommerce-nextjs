@@ -43,7 +43,7 @@ export default async function ProductDetailsSection({ id }: { id: string }) {
         <div className="flex items-center gap-20 pt-20 pb-5">
           <QuantitySelector />
 
-          <button className="flex-1 bg-red-600 text-white py-4 rounded-md font-semibold cursor-pointer hover:bg-red-700 transition">
+          <button className="flex-1 h-12 bg-red-600 text-white py-2 rounded-md font-semibold cursor-pointer hover:bg-red-700 transition">
             Add to Basket
           </button>
         </div>
