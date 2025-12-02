@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 
 type Product = {
@@ -12,15 +12,11 @@ type Product = {
   image: string;
 };
 
-export default function HomeHeader() {
+const HomeHeader = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
 
   const handleSearch = async () => {
     if (!query.trim()) return;
@@ -38,85 +34,116 @@ export default function HomeHeader() {
 
       const data = await res.json();
 
-      // API success=false gələndə
       if (data.success === false) {
-        setErrorMsg(data.message || "No results found");
+        setErrorMsg(data.message || "No products found");
         setResults([]);
-      }
-      // products gələndə
-      else {
+      } else {
         setResults(data.content || []);
         if (!data.content?.length) {
-          setErrorMsg("No results found");
+          setErrorMsg("No products found");
         }
       }
-    } catch (error) {
-      console.error(error);
-      setErrorMsg("Something went wrong. Try again.");
-      setResults([]);
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Something went wrong!");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="bg-gray-100 rounded-xl mx-4 mt-4 mb-2 p-4">
-      {/* SEARCH BOX */}
-      <div className="flex items-center gap-2 bg-white border rounded-xl px-3 py-2 shadow-sm">
-        <input
-          className="text-base px-2 flex-1 outline-none"
-          placeholder="Search products..."
-          value={query}
-          onChange={handleChange}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        />
+    <>
+      {/* HEADER */}
+      <div className="flex justify-between items-center pt-8 pb-7 px-28 ">
+        <Link href="/" className="text-2xl font-bold">
+          Exclusive
+        </Link>
 
-        <button
-          className="bg-blue-600 hover:bg-blue-700 transition text-white px-4 py-1.5 rounded-lg"
-          onClick={handleSearch}
-        >
-          Search
-        </button>
+        <div className="flex items-center space-x-4">
+          {/* SEARCH BAR */}
+          <div className="flex items-center bg-gray-200 rounded pr-2 w-full max-w-sm">
+            <input
+              type="text"
+              placeholder="What are you looking for?"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              className="flex-1 outline-none h-9 pr-6 pl-4 w-60"
+            />
+            <button onClick={handleSearch} type="button">
+              <Image
+                src="/icons/searchIcon.svg"
+                alt="Search"
+                width={24}
+                height={24}
+                className="cursor-pointer"
+              />
+            </button>
+          </div>
+          
+          <Link href={"/basket"}>
+            <Image
+              src="/icons/basket.svg"
+              alt="Basket"
+              width={32}
+              height={32}
+              className="cursor-pointer"
+            />
+          </Link>
+
+          <Image
+            src="/icons/user.svg"
+            alt="User"
+            width={32}
+            height={32}
+            className="cursor-pointer"
+          />
+        </div>
       </div>
+
+      <div className="border-b border-gray-300"></div>
+
+      {/* SEARCH RESULTS */}
 
       {/* LOADING */}
       {loading && (
-        <p className="text-center mt-4 text-gray-500 animate-pulse">
+        <p className="text-center text-gray-500 mt-6 animate-pulse">
           Searching...
         </p>
       )}
 
       {/* ERROR MESSAGE */}
       {!loading && errorMsg && (
-        <p className="text-center mt-4 text-red-500 font-medium">{errorMsg}</p>
+        <p className="text-center text-red-500 mt-6 font-medium">{errorMsg}</p>
       )}
 
-      {/* RESULTS */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {results.map((item) => (
+      {/* RESULTS GRID */}
+      <div className="px-28 mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {results.map((product) => (
           <div
-            key={item.id}
-            className="border p-2 rounded-xl bg-white shadow-sm hover:shadow-md transition"
+            key={product.id}
+            className="border bg-white shadow-sm hover:shadow-md rounded-xl p-3 transition"
           >
-            <Link href={`/product/${item.id}`}>
+            <Link href={`/product/${product.id}`}>
               <Image
-                src={item.image}
-                alt={item.title}
+                src={product.image}
+                alt={product.title}
                 width={300}
-                height={160}
-                className="w-full h-40 object-cover rounded-md"
+                height={200}
+                className="w-full h-48 object-cover rounded cursor-pointer"
               />
-
-              <h3 className="font-medium mt-2">{item.title}</h3>
-
-              <p className="text-gray-600">
-                {item.currency}
-                {item.price}
-              </p>
             </Link>
+
+            <h3 className="mt-3 font-medium">{product.title}</h3>
+            <p className="text-gray-700">
+              {product.currency}
+              {product.price}
+            </p>
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default HomeHeader;
